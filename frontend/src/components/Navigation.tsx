@@ -52,6 +52,12 @@ const Navigation: React.FC = () => {
                 Manage Groups
               </Link>
               <Link
+                to="/admin/patients"
+                className={`block px-4 py-2 hover:bg-blue-100 ${location.pathname === "/admin/patients" ? "bg-blue-100" : ""}`}
+              >
+                View Patients
+              </Link>
+              <Link
                 to="/admin/audit"
                 className={`block px-4 py-2 hover:bg-blue-100 ${location.pathname === "/admin/audit" ? "bg-blue-100" : ""}`}
               >

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional, Dict
-from backend.app.models.legacy_models import ClinicianPermission, ClinicianGroupConsent, KeycloakUserMapping
-from backend.app.core.identity_mapping import get_or_create_mapping
+from app.models.legacy_models import ClinicianPermission, ClinicianGroupConsent, KeycloakUserMapping
+from app.core.identity_mapping import get_or_create_mapping
 from datetime import datetime
 
 def get_clinician_permissions(db: Session, keycloak_sub: str, group_nid: int) -> Optional[ClinicianPermission]:

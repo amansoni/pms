@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from fastapi import Depends
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://dbuser:securepass123@postgres:5432/mental_health_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://dbuser:securepass123@postgres:5432/mental_health_db")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

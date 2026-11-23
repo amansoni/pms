@@ -28,3 +28,4 @@ This backend integrates Keycloak (for identity, roles, and groups) with a legacy
 
 ---
 For further details, see the SQLAlchemy models and Alembic migration scripts in the codebase.
+Error: Network Error

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuth } from "react-oidc-context";
-import { User, UserFormData, Group, GroupSettings } from "../types/admin.types";
+import { User, UserFormData, Group, GroupSettings, PatientRecord, TrustSummary } from "../types/admin.types";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
@@ -60,6 +60,16 @@ export const searchUsers = async (query: string): Promise<User[]> => {
 // Group Management
 export const getGroups = async (): Promise<Group[]> => {
   const res = await api.get("/api/groups");
+  return res.data;
+};
+
+export const getTrusts = async (): Promise<TrustSummary[]> => {
+  const res = await api.get("/api/admin/trusts");
+  return res.data;
+};
+
+export const getPatients = async (groupNid: number): Promise<PatientRecord[]> => {
+  const res = await api.get(`/api/admin/trusts/${groupNid}/patients`);
   return res.data;
 };
 

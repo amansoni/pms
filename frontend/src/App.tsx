@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
 import UserManagement from "./pages/admin/UserManagement";
 import GroupManagement from "./pages/admin/GroupManagement";
+import PatientManagement from "./pages/admin/PatientManagement";
 import Navigation from "./components/Navigation";
 
 const Callback: React.FC = () => (
@@ -39,6 +40,11 @@ function App() {
           <Route path="/admin/groups" element={
             <AdminRoute>
               <GroupManagement />
+            </AdminRoute>
+          } />
+          <Route path="/admin/patients" element={
+            <AdminRoute>
+              <PatientManagement />
             </AdminRoute>
           } />
           <Route path="/callback" element={<Callback />} />

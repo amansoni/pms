@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Dict
-from backend.app.services.clinician_service import (
+from app.services.clinician_service import (
     get_clinician_permissions,
     set_clinician_privileged_access,
     record_clinician_group_consent
 )
-from backend.app.core.identity_mapping import resolve_legacy_uid_from_token
-from backend.app.models.legacy_models import LaunchLog, TrustConfig, ClinicianPermission, LaunchPatient
-from backend.app.api.dependencies import get_db, get_current_user, require_role
+from app.core.identity_mapping import resolve_legacy_uid_from_token
+from app.models.legacy_models import LaunchLog, TrustConfig, ClinicianPermission, LaunchPatient
+from app.core.database import get_db
+from app.api.dependencies import get_current_user, require_role
 import json
 from datetime import datetime
 
@@ -51,7 +52,7 @@ def get_clinician_consent(group_nid: int = Query(...), db: Session = Depends(get
     if not legacy_uid:
         raise HTTPException(status_code=404, detail="No mapping for user")
     # Return latest consent for this user/group
-    from backend.app.models.legacy_models import ClinicianGroupConsent
+    from app.models.legacy_models import ClinicianGroupConsent
     consent = db.query(ClinicianGroupConsent).filter_by(uid=legacy_uid, group_nid=group_nid).order_by(ClinicianGroupConsent.timestamp.desc()).first()
     if not consent:
         return {"consent": None}
@@ -94,3 +95,19 @@ def list_trusts(db: Session = Depends(get_db), _: None = Depends(require_role("a
             "clinician_count": clinician_count
         })
     return result
+
+@router.get("/admin/trusts/{group_nid}/patients")
+def list_trust_patients(
+    group_nid: int,
+    db: Session = Depends(get_db),
+    _: None = Depends(require_role("admin")),
+):
+    patients = db.query(LaunchPatient).filter_by(group_nid=group_nid).order_by(LaunchPatient.serial).all()
+    return [
+        {
+            "serial": patient.serial,
+            "name": patient.full_name,
+            "identifier": patient.patient_indentifier,
+        }
+        for patient in patients
+    ]

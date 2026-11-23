@@ -22,6 +22,19 @@ export interface GroupSettings {
   features?: string[];
 }
 
+export interface TrustSummary {
+  trust_id: string;
+  drupal_group_nid: number;
+  patient_count: number;
+  clinician_count: number;
+}
+
+export interface PatientRecord {
+  serial: number;
+  name: string;
+  identifier: string;
+}
+
 export interface UserFormData {
   email: string;
   firstName?: string;

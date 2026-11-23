@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from backend.app.models.legacy_models import KeycloakUserMapping
+from app.models.legacy_models import KeycloakUserMapping
 from datetime import datetime
 from typing import Optional, Any
 
